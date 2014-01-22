@@ -1,0 +1,36 @@
+<h1><%= @user.username %></h1>
+
+<% @user.goals.each do |goal| %>
+  <p>
+    <% if goal.status == 'public' && @user != current_user %>
+      <%= button_to "Cheer!", goal_cheers_url(goal), method: :post %>
+    <% end %>
+
+    <% if goal.cheers.count == 1 %>
+      <%= '1 Cheer!'%>
+    <% elsif goal.cheers.count > 1 %>
+      <%= goal.cheers.count %> Cheers!
+    <% end %>
+    <%= goal.body if goal.status == 'public' %>
+    <%= goal.body if @user == current_user && goal.status == 'private' %><%= " - Completed".html_safe if goal.completed %>
+
+    <% if @user == current_user %>
+      <form action="<%= goal_url(goal.id) %>" method="post">
+        <input type="hidden"
+               name="authenticity_token"
+              value="<%= form_authenticity_token %>">
+        <input type="hidden" name="_method" value="put">
+        <input type="hidden" name="goal[completed]" value="1">
+        <p><input type="submit" value="Completed"></p>
+      </form>
+      <%= link_to "Edit Goal", edit_goal_url(goal) %>
+      <%= button_to "Delete", goal, method: :delete %>
+    <% end %>
+  </p>
+<% end %>
+
+
+<% if @user == current_user %>
+  <%= link_to "New Goal", new_goal_url %>
+<% end %>
+

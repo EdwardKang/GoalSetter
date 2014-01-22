@@ -1,0 +1,22 @@
+
+  <form action="<%= action %>" method="post" accept-charset="utf-8">
+    <input type="hidden"
+           name="authenticity_token"
+          value="<%= form_authenticity_token %>">
+
+    <input type="hidden"
+           name="_method"
+          value="<%= method %>">
+
+    <label>Goal
+      <input type="text" name="goal[body]" value="<%= goal.body %>">
+    </label>
+
+    <label for="public">Public</label>
+    <input type="radio" name="goal[status]" value="public" id="public" <%= "checked".html_safe if goal.status == "public" %>>
+
+    <label for="private">Private</label>
+    <input type="radio" name="goal[status]" value="private" id="private" <%= "checked".html_safe if goal.status == "private" %>>
+
+    <p><input type="submit" value="<%= submit %>"></p>
+  </form>

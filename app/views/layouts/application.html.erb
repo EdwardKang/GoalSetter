@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GSetter</title>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <% if flash.now[:errors] && !flash.now[:errors].empty? %>
+    <% flash.now[:errors].each do |error| %>
+      <%= error %>
+    <% end %>
+  <% end %>
+
+  <% if current_user %>
+    <%= button_to "Logout", session_url, method: :delete %>
+  <% end %>
+
+<%= yield %>
+
+</body>
+</html>
